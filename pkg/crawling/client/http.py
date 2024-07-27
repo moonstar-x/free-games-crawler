@@ -58,6 +58,10 @@ class HttpClient:
         ...
 
     @overload
+    def get_raw(self, url: str, encoding: str, **kwargs) -> str:
+        ...
+
+    @overload
     def get_raw(self, url: str, **kwargs) -> str:
         ...
 
@@ -71,6 +75,10 @@ class HttpClient:
 
     @overload
     def post_raw(self, url: str, encoding: None, **kwargs) -> bytes:
+        ...
+
+    @overload
+    def post_raw(self, url: str, encoding: str, **kwargs) -> str:
         ...
 
     @overload

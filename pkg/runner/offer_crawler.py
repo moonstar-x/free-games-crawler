@@ -1,7 +1,7 @@
 from typing import Iterator
 from pkg.crawling.crawler import Crawler
 from pkg.models.offer import Offer
-from pkg.runner.runnable import Runnable
+from pkg.interfaces.runnable import Runnable
 
 
 class OfferCrawlerRunner(Runnable):

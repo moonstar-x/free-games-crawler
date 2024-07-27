@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import Union, Literal
 from queue import Queue
 from concurrent.futures import ThreadPoolExecutor
-from pkg.runner.runnable import Runnable
+from pkg.interfaces.runnable import Runnable
 from pkg.utils.log import Logger
 from pkg.utils.lang import get_class_name
 from pkg.config import Config
