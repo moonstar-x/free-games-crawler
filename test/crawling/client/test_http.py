@@ -119,6 +119,10 @@ class TestHttpClient:
             client.set_headers({'Custom': 'Value'})
             assert client._headers.get('custom') == 'Value'
 
+        def test_should_have_user_agent_regardless(self, client):
+            client.set_headers({})
+            assert client._headers.get('user-agent') == 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15'
+
     class TestGetHtml:
         def test_should_return_a_valid_beautiful_soup(self, client, mock_html):
             assert isinstance(client.get_html(''), BeautifulSoup)

@@ -35,7 +35,7 @@ class HttpClient:
         self._headers = HttpClient._prepare_headers({})
 
     def set_headers(self, headers: Dict[str, str]) -> None:
-        self._headers = HttpClient._prepare_headers(headers)
+        self._headers = HttpClient._prepare_headers({ **self._headers, **headers })
 
     def get_html(self, url: str, **kwargs) -> BeautifulSoup:
         response = self._with_retry(self._get, url, **kwargs)
@@ -135,6 +135,13 @@ class HttpClient:
     @staticmethod
     def _prepare_headers(headers: Dict[str, str]) -> CaseInsensitiveDict[str]:
         complete_headers = requests.utils.default_headers()
+        complete_headers.update(HttpClient._default_headers())
         complete_headers.update(headers)
 
         return complete_headers
+
+    @staticmethod
+    def _default_headers() -> Dict[str, str]:
+        return {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15'
+        }
