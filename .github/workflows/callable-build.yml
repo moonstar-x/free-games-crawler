@@ -15,7 +15,7 @@ on:
       ghcr_username:
         required: true
         type: string
-      docker_hub_username:
+      dockerhub_username:
         required: true
         type: string
     secrets:
