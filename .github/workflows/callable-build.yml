@@ -72,7 +72,7 @@ jobs:
             ${{ env.GHCR_IMAGE }}:${{ inputs.image_tag }}
             ${{ env.DOCKERHUB_IMAGE }}:${{ inputs.image_tag }}
           cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Image Digest
         run: echo ${{ steps.docker_build.outputs.digest }}
