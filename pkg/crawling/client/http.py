@@ -93,7 +93,6 @@ class HttpClient:
 
         return response.content
 
-    # TODO: Sleep should be random?
     def _request_sleep(self) -> None:
         if self._options.request_timeout > 0:
             sleep(self._options.request_timeout)

@@ -11,7 +11,7 @@ class OfferCrawlerRunner(Runnable):
         self._crawler = crawler
 
     def _execute(self) -> None:
-        self._crawler.logger.log('Crawling started...')
+        self._crawler.logger.info('Crawling started...')
 
         result = self._crawler.run()
         for offer in result:
@@ -22,14 +22,14 @@ class OfferCrawlerRunner(Runnable):
             else:
                 self._handle_new_offer(offer)
 
-        self._crawler.logger.log('Crawling ended.')
+        self._crawler.logger.info('Crawling ended.')
 
     def _handle_existing_offer(self, offer: Offer) -> None:
-        self._crawler.logger.log(f'Found existing offer: {offer.to_str()} - Will update cache and skip publish.')
+        self._crawler.logger.info(f'Found existing offer: {offer.to_str()} - Will update cache and skip publish.')
         cache_insert_offer(offer)
 
     def _handle_new_offer(self, offer: Offer) -> None:
-        self._crawler.logger.log(f'Found new offer: {offer.to_str()} - Will update cache and publish.')
+        self._crawler.logger.info(f'Found new offer: {offer.to_str()} - Will update cache and publish.')
         cache_insert_offer(offer)
         publish_offer(offer)
 
@@ -37,5 +37,5 @@ class OfferCrawlerRunner(Runnable):
         try:
             self._execute()
         except Exception as error:
-            self._crawler.logger.log('An error occurred while crawling.')
+            self._crawler.logger.info('An error occurred while crawling.')
             self._crawler.logger.exception(error)

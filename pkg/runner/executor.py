@@ -41,7 +41,7 @@ class RunnerExecutor:
         return self._start_single_thread()
 
     def _start_multi_thread(self) -> None:
-        self._logger.log(f'Begin multi thread execution with {self._max_workers} workers.')
+        self._logger.info(f'Begin multi thread execution with {self._max_workers} workers.')
 
         with ThreadPoolExecutor(self._max_workers) as pool:
             while not self._runners.empty():
@@ -49,7 +49,7 @@ class RunnerExecutor:
                 pool.submit(runner.run)
 
     def _start_single_thread(self) -> None:
-        self._logger.log(f'Begin single thread execution.')
+        self._logger.info(f'Begin single thread execution.')
 
         while not self._runners.empty():
             runner = self._runners.get()

@@ -111,7 +111,7 @@ class TestRunnerExecutor:
         class TestSingleThread:
             def test_should_log_start_message(self, executor_no_multi):
                 executor_no_multi.start()
-                executor_no_multi._logger.log.assert_any_call('Begin single thread execution.')
+                executor_no_multi._logger.info.assert_any_call('Begin single thread execution.')
 
             def test_should_execute_all_runners_in_queue(self, executor_no_multi, runner):
                 executor_no_multi.push(runner)
@@ -123,7 +123,7 @@ class TestRunnerExecutor:
         class TestMultiThread:
             def test_should_log_start_message(self, executor_multi):
                 executor_multi.start()
-                executor_multi._logger.log.assert_any_call('Begin multi thread execution with 2 workers.')
+                executor_multi._logger.info.assert_any_call('Begin multi thread execution with 2 workers.')
 
             def test_should_execute_all_runners_in_queue(self, executor_multi, runner):
                 executor_multi.push(runner)

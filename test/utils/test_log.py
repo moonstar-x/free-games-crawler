@@ -7,7 +7,7 @@ class TestLogger:
         logger = module.Logger(tag)
 
         message = 'my message'
-        logger.log(message)
+        logger.info(message)
 
         out, err = capfd.readouterr()
         assert tag in out
@@ -17,7 +17,7 @@ class TestLogger:
         logger = module.Logger(tag)
 
         message = 'my message'
-        logger.log(message)
+        logger.info(message)
 
         out, err = capfd.readouterr()
         assert message in out
@@ -28,7 +28,7 @@ class TestLogger:
 
         message1 = 'my message'
         message2 = 'another message'
-        logger.log(message1, message2)
+        logger.info(message1, message2)
 
         out, err = capfd.readouterr()
         assert message1 in out
