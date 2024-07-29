@@ -25,13 +25,14 @@ class SteamCrawler(HttpCrawler[Iterator[Offer]]):
         return self._extract_offers(response)
 
     def _extract_offers(self, soup: BeautifulSoup) -> Iterator[Offer]:
-        items = soup.find_all(attrs={'id': 'search_resultsRows'})
+        listing = soup.find(attrs={'id': 'search_resultsRows'})
+        items = listing.find_all('a')
 
         for item in items:
             yield self._get_offer_for_item(item)
 
     def _get_offer_for_item(self, item: BeautifulSoup) -> Offer:
-        url = item.find('a').attrs.get('href')
+        url = item.attrs.get('href')
         soup = self._client.get_html(url, cookies=self._cookies)
 
         return self._map_offer(url, soup)
