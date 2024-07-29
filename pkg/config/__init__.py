@@ -21,7 +21,7 @@ class Config:
     def from_env() -> Config:
         return Config(
             redis_uri=os.getenv('REDIS_URI'),
-            redis_ttl=safe_int(os.getenv('REDIS_TTL')),
+            redis_ttl=safe_int(os.getenv('REDIS_TTL')) or 7200,
             http_request_timeout=safe_float(os.getenv('CRAWLER_HTTP_REQUEST_TIMEOUT')),
             http_max_retries=safe_int(os.getenv('CRAWLER_HTTP_MAX_RETRIES')),
             http_retry_timeout=safe_float(os.getenv('CRAWLER_HTTP_RETRY_TIMEOUT')),
