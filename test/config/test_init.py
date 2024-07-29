@@ -6,6 +6,7 @@ import importlib
 def assert_config(config: module.Config) -> None:
     assert config.redis_uri == 'redis://localhost:6379'
     assert config.redis_ttl == 60
+    assert config.scheduler_seconds == 500
     assert config.http_request_timeout == 0.5
     assert config.http_max_retries == 10
     assert config.http_retry_timeout == 3
@@ -17,6 +18,7 @@ def assert_config(config: module.Config) -> None:
 def set_env_vars(monkeypatch):
     monkeypatch.setenv('REDIS_URI', 'redis://localhost:6379')
     monkeypatch.setenv('REDIS_TTL', '60')
+    monkeypatch.setenv('SCHEDULER_EVERY_SECONDS', '500')
     monkeypatch.setenv('CRAWLER_HTTP_REQUEST_TIMEOUT', '0.5')
     monkeypatch.setenv('CRAWLER_HTTP_MAX_RETRIES', '10')
     monkeypatch.setenv('CRAWLER_HTTP_RETRY_TIMEOUT', '3')

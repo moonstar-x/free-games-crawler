@@ -5,10 +5,16 @@ from dataclasses import dataclass
 from pkg.utils.lang import safe_float, safe_int
 
 
+_TWO_HOURS = 7200
+_THIRTY_MINUTES = 1800
+
+
 @dataclass
 class Config:
     redis_uri: str
     redis_ttl: int
+
+    scheduler_seconds: int
 
     http_request_timeout: Optional[float]
     http_max_retries: Optional[int]
@@ -21,7 +27,8 @@ class Config:
     def from_env() -> Config:
         return Config(
             redis_uri=os.getenv('REDIS_URI'),
-            redis_ttl=safe_int(os.getenv('REDIS_TTL')) or 7200,
+            redis_ttl=safe_int(os.getenv('REDIS_TTL')) or _TWO_HOURS,
+            scheduler_seconds=safe_int(os.getenv('SCHEDULER_EVERY_SECONDS')) or _THIRTY_MINUTES,
             http_request_timeout=safe_float(os.getenv('CRAWLER_HTTP_REQUEST_TIMEOUT')),
             http_max_retries=safe_int(os.getenv('CRAWLER_HTTP_MAX_RETRIES')),
             http_retry_timeout=safe_float(os.getenv('CRAWLER_HTTP_RETRY_TIMEOUT')),
