@@ -52,3 +52,19 @@ Or, if you wish to have test watch enabled:
 ```bash
 ptw test
 ```
+
+## Building
+
+To build this project you should use [Docker](https://docker.com)
+
+To build the image locally, you can run:
+
+```bash
+docker build -t test/free-games-crawler .  
+```
+
+And to run it:
+
+```bash
+docker run -it --rm --network host -e REDIS_URI=redis://localhost:6379 test/free-games-crawler
+```

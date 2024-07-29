@@ -6,6 +6,8 @@ from pkg.config import config
 
 
 def run_crawlers_scheduled(active: Callable[[], bool] = lambda: True) -> None:
+    run_crawlers()
+
     schedule.every(config.scheduler_seconds).seconds.do(run_crawlers)
 
     while active():

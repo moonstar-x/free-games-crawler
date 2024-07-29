@@ -1,0 +1,10 @@
+# Ignore everything by default.
+*
+
+# Allow the public projec files.
+!pkg
+!main.py
+!requirements.txt
+!Dockerfile
+!README.md
+!LICENSE
