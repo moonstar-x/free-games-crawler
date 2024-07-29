@@ -1,0 +1,1 @@
+PUBSUB_OFFER_CHANNEL = 'offers'
