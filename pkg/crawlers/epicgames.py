@@ -51,6 +51,7 @@ class EpicGamesCrawler(HttpCrawler[Iterator[Offer]]):
 
         return Offer(
             storefront=EpicGamesCrawler.STOREFRONT_NAME,
+            id=slug,
             url=url,
             title=title,
             description=description,

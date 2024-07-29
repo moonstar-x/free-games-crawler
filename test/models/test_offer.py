@@ -6,6 +6,7 @@ class TestOffer:
         def test_should_return_correct_json_string(self):
             offer = module.Offer(
                 storefront='Store',
+                id='game-id',
                 url='https://store.com/game',
                 title='Game',
                 description='A game that is fun.',
@@ -16,11 +17,12 @@ class TestOffer:
                 thumbnail='https://store.com/game/thumbnail.jpg'
             )
 
-            assert offer.to_json() == '{"storefront": "Store", "url": "https://store.com/game", "title": "Game", "description": "A game that is fun.", "type": "game", "publisher": "GamesCorp", "original_price": 19.99, "original_price_fmt": "$19.99", "thumbnail": "https://store.com/game/thumbnail.jpg"}'
+            assert offer.to_json() == '{"storefront": "Store", "id": "game-id", "url": "https://store.com/game", "title": "Game", "description": "A game that is fun.", "type": "game", "publisher": "GamesCorp", "original_price": 19.99, "original_price_fmt": "$19.99", "thumbnail": "https://store.com/game/thumbnail.jpg"}'
 
         def test_should_return_correct_json_string_with_nullable_properties(self):
             offer = module.Offer(
                 storefront='Store',
+                id='game-id',
                 url='https://store.com/game',
                 title='Game',
                 description='A game that is fun.',
@@ -31,12 +33,30 @@ class TestOffer:
                 thumbnail=None
             )
 
-            assert offer.to_json() == '{"storefront": "Store", "url": "https://store.com/game", "title": "Game", "description": "A game that is fun.", "type": "game", "publisher": null, "original_price": null, "original_price_fmt": null, "thumbnail": null}'
+            assert offer.to_json() == '{"storefront": "Store", "id": "game-id", "url": "https://store.com/game", "title": "Game", "description": "A game that is fun.", "type": "game", "publisher": null, "original_price": null, "original_price_fmt": null, "thumbnail": null}'
+
+    class TestToStr:
+        def test_should_return_simple_string(self):
+            offer = module.Offer(
+                storefront='Store',
+                id='game-id',
+                url='https://store.com/game',
+                title='Game',
+                description='A game that is fun.',
+                type='game',
+                publisher=None,
+                original_price=None,
+                original_price_fmt=None,
+                thumbnail=None
+            )
+
+            assert offer.to_str() == 'Game on Store'
 
     class TestEq:
         def test_should_return_true_for_equal_offers(self):
             offer1 = module.Offer(
                 storefront='Store',
+                id='game-id',
                 url='https://store.com/game',
                 title='Game',
                 description='A game that is fun.',
@@ -49,6 +69,7 @@ class TestOffer:
 
             offer2 = module.Offer(
                 storefront='Store',
+                id='game-id',
                 url='https://store.com/game',
                 title='Game',
                 description='A game that is fun.',
@@ -64,6 +85,7 @@ class TestOffer:
         def test_should_return_false_for_unequal_offers(self):
             offer1 = module.Offer(
                 storefront='Stores',
+                id='game-1',
                 url='https://store.com/game',
                 title='Game',
                 description='A game that is fun.',
@@ -76,6 +98,7 @@ class TestOffer:
 
             offer2 = module.Offer(
                 storefront='Store',
+                id='game-2',
                 url='https://store.com/game',
                 title='Game',
                 description='A game that is fun.',

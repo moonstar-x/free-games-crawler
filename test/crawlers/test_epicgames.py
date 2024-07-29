@@ -29,6 +29,7 @@ class TestEpicGamesCrawler:
 
             offer_1 = Offer(
                 storefront='EpicGames',
+                id='fist-forged-in-shadow-torch',
                 url='https://store.epicgames.com/p/fist-forged-in-shadow-torch',
                 title='F.I.S.T.: Forged In Shadow Torch',
                 description='Explore more than a dozen unique areas in a Metroidvania style map. \nThe Fist, Drill, and Whip are three weapons with completely different fighting styles that offer seamless switching between high combo, high damage, and long range attacks. ',
@@ -41,6 +42,7 @@ class TestEpicGamesCrawler:
 
             offer_2 = Offer(
                 storefront='EpicGames',
+                id='olympics-go-paris-2024-pc-outfits-a48737',
                 url='https://store.epicgames.com/p/olympics-go-paris-2024-pc-outfits-a48737',
                 title='Exclusive Outfits Pack',
                 description='Rep your love for the Olympic Games Paris 2024 and stand out from the crowd with these 11 unique outfits featuring the official mascot!',

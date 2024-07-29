@@ -37,6 +37,10 @@ class SteamCrawler(HttpCrawler[Iterator[Offer]]):
         return self._map_offer(url, soup)
 
     def _map_offer(self, url: str, soup: BeautifulSoup) -> Offer:
+        appid_pattern = r'\/app\/(\d+?)\/'
+        appid_match = re.search(appid_pattern, url)
+        appid = appid_match.group(1)
+
         title = soup.find('div', attrs={'id': 'appHubAppName'}).get_text()
         description = soup.find('meta', attrs={'property': 'og:description'}).attrs.get('content')
         offer_type = self._resolve_offer_type(soup)
@@ -53,6 +57,7 @@ class SteamCrawler(HttpCrawler[Iterator[Offer]]):
 
         return Offer(
             storefront=SteamCrawler.STOREFRONT_NAME,
+            id=appid,
             url=url,
             title=title,
             description=description,

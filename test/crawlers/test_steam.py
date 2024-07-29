@@ -39,6 +39,7 @@ class TestSteamCrawler:
 
                 offer = Offer(
                     storefront='Steam',
+                    id='3101570',
                     url='https://store.steampowered.com/app/3101570/Minion_Masters__Power_UP/?snr=1_7_7_2300_150_1',
                     title='Minion Masters - Power UP',
                     description='The Power UP! DLC is a great +300% value bundle emphasising flexibility to let you adapt to the changing fates of battle! You also get a headstart in the Season Pass!',
