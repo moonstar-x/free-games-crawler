@@ -27,15 +27,15 @@ class EpicGamesCrawler(HttpCrawler[Iterator[Offer]]):
             yield self._map_element_to_offer(element)
 
     @staticmethod
-    def _filter_free_element(element: Json) -> Json:
-        promotional_offers = safe_attribute_chain(lambda: element.get('promotions').get('promotionalOffers'))
+    def _filter_free_element(element: Json) -> bool:
+        promotional_offers = safe_attribute_chain(lambda: element.get('promotions').get('promotionalOffers'), [])
         discount_price = safe_attribute_chain(lambda: element.get('price').get('totalPrice').get('discountPrice'))
 
         return len(promotional_offers) > 0 and discount_price == 0
 
     def _map_element_to_offer(self, element: Json) -> Offer:
         offer_mappings = element.get('offerMappings')
-        slug = safe_attribute_chain(lambda: list_find(offer_mappings, lambda m: m.get('pageSlug') is not None).get('pageSlug')) or element.get('urlSlug')
+        slug = safe_attribute_chain(lambda: list_find(offer_mappings, lambda m: m.get('pageSlug') is not None).get('pageSlug')) or element.get('productSlug')
         url = f'{self._store_base_url}/{slug}'
 
         title = element.get('title')
@@ -47,7 +47,7 @@ class EpicGamesCrawler(HttpCrawler[Iterator[Offer]]):
         original_price_fmt = safe_attribute_chain(lambda: element.get('price').get('totalPrice').get('fmtPrice').get('originalPrice'))
 
         images = element.get('keyImages', [])
-        thumbnail = safe_attribute_chain(lambda: list_find(images, lambda d: d.get('type') == 'Thumbnail').get('url'))
+        thumbnail = safe_attribute_chain(lambda: list_find(images, lambda d: d.get('type') in ['Thumbnail', 'DieselStoreFrontWide']).get('url'))
 
         return Offer(
             storefront=EpicGamesCrawler.STOREFRONT_NAME,

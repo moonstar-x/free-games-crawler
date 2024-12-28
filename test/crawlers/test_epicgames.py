@@ -5,27 +5,44 @@ import json
 from pkg.models.offer import Offer
 
 
-@pytest.fixture(scope='session')
-def mocked_epic_games_data():
+def read_mocked_data(path):
     cur_directory = pathlib.Path(__file__).parent.resolve()
-    filepath = cur_directory.joinpath('__mocks__/epic_games_response.txt')
+    filepath = cur_directory.joinpath(path)
 
     with filepath.open('r') as file:
         return json.loads(file.read())
 
 
+@pytest.fixture(scope='session')
+def mocked_epic_games_data_1():
+    return read_mocked_data('__mocks__/epic_games_response-1.txt')
+
+
+@pytest.fixture(scope='session')
+def mocked_epic_games_data_2():
+    return read_mocked_data('__mocks__/epic_games_response-2.txt')
+
+
 @pytest.fixture
-def crawler(mocked_epic_games_data, mocker):
+def crawler_1(mocked_epic_games_data_1, mocker):
     mock_client = mocker.MagicMock()
-    mock_client.get_json.return_value = mocked_epic_games_data
+    mock_client.get_json.return_value = mocked_epic_games_data_1
+
+    return module.EpicGamesCrawler(mock_client)
+
+
+@pytest.fixture
+def crawler_2(mocked_epic_games_data_2, mocker):
+    mock_client = mocker.MagicMock()
+    mock_client.get_json.return_value = mocked_epic_games_data_2
 
     return module.EpicGamesCrawler(mock_client)
 
 
 class TestEpicGamesCrawler:
     class TestRun:
-        def test_should_return_offers(self, crawler):
-            result = list(crawler.run())
+        def test_should_return_offers_response_1(self, crawler_1):
+            result = list(crawler_1.run())
 
             offer_1 = Offer(
                 storefront='EpicGames',
@@ -55,6 +72,24 @@ class TestEpicGamesCrawler:
 
             assert result[0] == offer_1
             assert result[1] == offer_2
+
+        def test_should_return_offers_response_2(self, crawler_2):
+            result = list(crawler_2.run())
+
+            offer = Offer(
+                storefront='EpicGames',
+                id='hot-wheels-unleashed',
+                url='https://store.epicgames.com/p/hot-wheels-unleashed',
+                title='HOT WHEELS UNLEASHED™',
+                description='HOT WHEELS UNLEASHED™',
+                type='other',
+                publisher='Epic Dev Test Account',
+                original_price=0.0,
+                original_price_fmt='0',
+                thumbnail='https://cdn1.epicgames.com/offer/d5241c76f178492ea1540fce45616757/EGS_HolidaySale_2024_GameArt_Game10_1080x1920_1920x1080-da542ce3d442311a86d81c40b5d87691'
+            )
+
+            assert result[0] == offer
 
 
 class TestBuilder:
